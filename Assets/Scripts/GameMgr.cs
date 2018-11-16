@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameMgr : MonoBehaviour {
 
     public GameObject cubePrefab; // building cube
     public GameObject cubeTransparent; // guiding cube
+
+    // holds all the already built cubes 
+    private List<GameObject> allCubes;
 
     // initializing translucent color
     private Color32 yellow = new Color32(255, 135, 0, 150);
@@ -16,6 +20,10 @@ public class GameMgr : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+        // initializing allCubes list
+        allCubes = new List<GameObject>();
+
         // instantiate guiding cube
         cubeTransparent = Instantiate(cubeTransparent);
 	}
@@ -71,8 +79,26 @@ public class GameMgr : MonoBehaviour {
                 Quaternion.identity
                 );
             cube.tag = "cubeObject"; // assign tag to cube
+
+            allCubes.Add(cube); // adding new cube to the list
         }
 
+        // destroy previous cube one-by-one by right-click
+        if (Input.GetMouseButtonUp(1))
+        {
+            if (allCubes.Count != 0)
+            {
+                Destroy(allCubes.Last()); // destroying the cube (Unity-part)
+                allCubes.RemoveAt(allCubes.Count - 1); // destroying empty list (C#-part)
+            }
+        }
+
+        // escape key to quit
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            Debug.Log("Exiting!");
+            Application.Quit();
+        }
     }
 
 }

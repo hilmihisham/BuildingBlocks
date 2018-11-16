@@ -151,7 +151,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier: {}
   buildNumber:
-    Standalone: 3
+    Standalone: 4
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 16
   AndroidTargetSdkVersion: 0
